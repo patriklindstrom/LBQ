@@ -123,7 +123,8 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>robocopy $(ProjectDir)\views $(TargetDir)\views /E</PostBuildEvent>
+    <PostBuildEvent>robocopy $(ProjectDir)\views $(TargetDir)\views /E 
+robocopy $(ProjectDir)\Scripts $(TargetDir)\Scripts /E</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

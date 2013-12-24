@@ -40,18 +40,18 @@ namespace LBQ.Katana
             //    }
             //    await next();
             //});
-            //app.Use(async (environment, next) =>
-            //{
-            //    Console.WriteLine("Requesting => " + environment.Request.Path);
-            //    await next();
-            //    Console.WriteLine("Response => " + environment.Response.StatusCode);
-            //}
-            //    );
-
-            //var config = new HttpConfiguration();
-            //config.MapHttpAttributeRoutes();
-            //config.Routes.MapHttpRoute("bugs", "api/{Controller}");
-            //app.UseWebApi(config);
+            app.Use(async (environment, next) =>
+            {
+                Console.WriteLine("Requesting => " + environment.Request.Path);
+                await next();
+                Console.WriteLine("Response => " + environment.Response.StatusCode);
+            }
+                );
+            app.MapSignalR();
+            var config = new HttpConfiguration();
+            config.MapHttpAttributeRoutes();
+            config.Routes.MapHttpRoute("bugs", "api/{Controller}");
+            app.UseWebApi(config);
 
             app.UseNancy(options =>
             {
