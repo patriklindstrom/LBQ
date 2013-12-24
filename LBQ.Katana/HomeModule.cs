@@ -17,7 +17,7 @@ namespace LBQ.Katana
                 var owinEnvironment = (IDictionary<string, object>)this.Context.Items["OWIN_REQUEST_ENVIRONMENT"];
                 var owinCtx = new OwinContext(owinEnvironment);
 
-                var model = new {title = "We've Got Issues..."};
+                var model = new {title = "We've Got Issues Again..."};
                 return View["index", model];
             };
         }
