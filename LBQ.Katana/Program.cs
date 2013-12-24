@@ -4,7 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.Owin.Hosting;
+using Nancy;
+using Nancy.Conventions;
 using Owin;
 
 namespace LBQ.Katana
@@ -18,7 +21,7 @@ namespace LBQ.Katana
             string uri = "http://localhost:8080";
             using (WebApp.Start<Startup>(uri))
             {
-                Console.WriteLine("Started");
+                Console.WriteLine("Lets Start!");
                 Console.ReadKey();
                 Console.WriteLine("Stopping!");
             }
@@ -37,20 +40,39 @@ namespace LBQ.Katana
             //    }
             //    await next();
             //});
-            app.Use(async (environment, next) =>
+            //app.Use(async (environment, next) =>
+            //{
+            //    Console.WriteLine("Requesting => " + environment.Request.Path);
+            //    await next();
+            //    Console.WriteLine("Response => " + environment.Response.StatusCode);
+            //}
+            //    );
+
+            //var config = new HttpConfiguration();
+            //config.MapHttpAttributeRoutes();
+            //config.Routes.MapHttpRoute("bugs", "api/{Controller}");
+            //app.UseWebApi(config);
+
+            app.UseNancy(options =>
             {
-                Console.WriteLine("Requesting : " + environment.Request.Path);
-                await next();
-                Console.WriteLine("Response: " + environment.Response.StatusCode);
-            }
-                );
-            app.UseHelloWorld();
+                options.Bootstrapper = new CustomBootstrapper();
+            });
+            //app.UseHelloWorld();
             //  app.UseWelcomePage();
             //app.Run(ctx =>
             //{
             //    return ctx.Response.WriteAsync("Hello World");
             //}
             //    );
+        }
+    }
+    public class CustomBootstrapper : DefaultNancyBootstrapper
+    {
+        protected override void ConfigureConventions(NancyConventions nancyConventions)
+        {
+            base.ConfigureConventions(nancyConventions);
+
+            Conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("scripts", "Scripts"));
         }
     }
 
