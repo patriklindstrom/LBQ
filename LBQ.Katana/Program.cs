@@ -5,9 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
+using LBQ.Katana.MockupModels;
+using LBQ.Katana.Model;
 using Microsoft.Owin.Hosting;
 using Nancy;
+using Nancy.Bootstrapper;
 using Nancy.Conventions;
+using Nancy.TinyIoc;
 using Owin;
 
 namespace LBQ.Katana
@@ -71,8 +75,16 @@ namespace LBQ.Katana
         protected override void ConfigureConventions(NancyConventions nancyConventions)
         {
             base.ConfigureConventions(nancyConventions);
-
-            Conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("scripts", "Scripts"));
+            string[] jsStrings = new[] {"js"};
+            string[] contentStrings = new[] { "css", "png","jpg" };
+            Conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("scripts", "Scripts", jsStrings));
+            Conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("content", "Content", contentStrings));
+           
+        }
+        protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+        {
+            base.ApplicationStartup(container, pipelines);
+            container.Register<ILogFilter,MockEventLogFilter>();
         }
     }
 

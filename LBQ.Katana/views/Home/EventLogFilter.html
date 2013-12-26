@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>@Model.Title</title>
+</head>
+<body>
+    <header>
+        <h1>@Model.Title</h1>
+        <h2> @Model.LastRefreshedTime </h2>
+</header>
+
+    <table id="EventLog-Tbl" class="LogFilter-Tbl">
+        <thead><tr><td>Time</td><td>Log type</td><td>Source</td><td>Log Message</td><td>SearchTerm</td></tr></thead>
+        <tbody>
+            @Each.LogRows
+            <tr><td>@Current.Time</td><td>@Current.LogType</td><td>@Current.Src</td><td>@Current.Msg</td><td>@Current.SearchT</td></tr>
+            @EndEach
+        </tbody>
+
+        </table>
+</body>
+</html>
