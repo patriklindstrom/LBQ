@@ -22,10 +22,17 @@ namespace LBQ.Katana
     {
         private static void Main(string[] args)
         {
-            string uri = "http://localhost:8080";
+            string port = "8080";
+            if (args.Length >0)
+            {
+                port = args[0] ?? "8080";
+            }
+            
+            string uri = "http://localhost:" + port;
+            Console.WriteLine("Lets Start listen to this address: " + uri);
             using (WebApp.Start<Startup>(uri))
             {
-                Console.WriteLine("Lets Start!");
+                Console.WriteLine("Now we are listening to : " + uri );
                 Console.ReadKey();
                 Console.WriteLine("Stopping!");
             }
