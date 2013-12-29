@@ -160,6 +160,7 @@
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\AppSpecific.css" />
     <Content Include="Content\css\bootstrap-theme.css" />
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
@@ -216,9 +217,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>robocopy $(ProjectDir)\views $(TargetDir)\views /E 
-robocopy $(ProjectDir)\Scripts $(TargetDir)\Scripts /E
-robocopy $(ProjectDir)\Content $(TargetDir)\Content /E</PostBuildEvent>
+    <PostBuildEvent>robocopy $(ProjectDir)views $(TargetDir)views /E 
+
+robocopy $(ProjectDir)Scripts $(TargetDir)Scripts /E
+
+robocopy $(ProjectDir)Content $(TargetDir)Content /E
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
