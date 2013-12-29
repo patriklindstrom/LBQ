@@ -18,17 +18,15 @@ namespace LBQ.Katana
             {
                 var owinEnvironment = (IDictionary<string, object>)this.Context.Items["OWIN_REQUEST_ENVIRONMENT"];
                 var owinCtx = new OwinContext(owinEnvironment);
-
                 model.Title =  "We have Issues Again with IOC socks...";
                 return View["index", model];
             };
             Get["/EventLogFilter"] = _ =>
             {
-                var owinEnvironment = (IDictionary<string, object>)this.Context.Items["OWIN_REQUEST_ENVIRONMENT"];
-                var owinCtx = new OwinContext(owinEnvironment);
+                //var owinEnvironment = (IDictionary<string, object>)this.Context.Items["OWIN_REQUEST_ENVIRONMENT"];
+                //var owinCtx = new OwinContext(owinEnvironment);
                 //var model = new MockEventLogFilter();
-               // model.Title ="EventLog things with Socks";
-
+                model.Title ="EventLog Filter";
                 return View["EventLogFilter", model];
             };
         }
