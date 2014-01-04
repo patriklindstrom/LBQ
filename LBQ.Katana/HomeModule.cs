@@ -23,9 +23,8 @@ namespace LBQ.Katana
             };
             Get["/EventLogFilter"] = _ =>
             {
-                //var owinEnvironment = (IDictionary<string, object>)this.Context.Items["OWIN_REQUEST_ENVIRONMENT"];
-                //var owinCtx = new OwinContext(owinEnvironment);
-                //var model = new MockEventLogFilter();
+                ILogFilterRepo eventLogFilterRepo = new EventLogFilterRepo();
+                model = eventLogFilterRepo.GetData();
                 model.Title ="EventLog Filter";
                 return View["EventLogFilter", model];
             };

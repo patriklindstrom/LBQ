@@ -17,7 +17,16 @@ using Owin;
 namespace LBQ.Katana
 {
     using AppFunc = Func<IDictionary<string, object>, Task>;
-
+    public static class Global_Const
+    {
+        public static string EVENTLOGTYPE="EventLog";
+        public static string EVENTLOGTITLE = "Filterered Eventslogs";
+        public const string SOURCE = "application";
+        public const string DATE_FORMAT = "yyyyMMddHHmmss";
+        public const string DATE_FORMAT_STR = "{0:yyyyMMddHHmmss}";
+        public const int MAXGETROWS = 5000;
+        public const int TIMEOUT_S = 2;
+    }
     internal class Program
     {
         private static void Main(string[] args)
@@ -91,7 +100,10 @@ namespace LBQ.Katana
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
-            container.Register<ILogFilter,MockEventLogFilter>();
+            //container.Register<ILogFilter,MockEventLogFilter>();
+            container.Register<ILogFilter, EventLogFilter>();
+
+            container.Register<ILogFilterRepo, EventLogFilterRepo>();
         }
     }
 

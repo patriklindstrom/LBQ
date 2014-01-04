@@ -110,6 +110,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -131,8 +132,11 @@
   <ItemGroup>
     <Compile Include="api\BugsController.cs" />
     <Compile Include="EventLogFilterModule.cs" />
+    <Compile Include="EventRecordTimeSpanSearcher.cs" />
+    <Compile Include="Repo\EventLogFilterRepo.cs" />
     <Compile Include="HomeModule.cs" />
     <Compile Include="Hubs\BugHub.cs" />
+    <Compile Include="Repo\ILogFilterRepo.cs" />
     <Compile Include="MockupModels\MockEventLogFilter.cs" />
     <Compile Include="Model\Bug.cs" />
     <Compile Include="Model\BugsRepository.cs" />
