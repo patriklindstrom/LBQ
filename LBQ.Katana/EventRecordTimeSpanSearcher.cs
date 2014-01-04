@@ -9,9 +9,17 @@ namespace LBQ.Katana
 {
     public class EventRecordTimeSpanSearcher : IEventRecordTimeSpanSearcher
     {
-        public ManagementObjectCollection EventsCollection { get; set; }
-        public EventRecordTimeSpanSearcher(DateTime fromTime, DateTime toTime)
+        public List<string> ServerList { get; set; }
+        public EventRecordTimeSpanSearcher(ISettingsProvider settingsProvider)
         {
+            ServerList = settingsProvider.GetListOfServersToQuery();
+        }
+
+        public ManagementObjectCollection GetEventsCollection(DateTime fromTime, DateTime toTime)
+        {
+            ManagementObjectCollection mngmtObjectCollection = null;
+            foreach (var serv in ServerList)
+            {           
             string strFromTime = ManagementDateTimeConverter.ToDmtfDateTime(fromTime);// DateTime outDateTime   String.Format(Global_Const.DATE_FORMAT_STR, fromTime) + ".000000+000";
             string strToTime = ManagementDateTimeConverter.ToDmtfDateTime(toTime);// String.Format(Global_Const.DATE_FORMAT_STR, toTime) + ".000000+000";
             string wmiQuery =
@@ -20,7 +28,10 @@ namespace LBQ.Katana
         Global_Const.SOURCE, strFromTime, strToTime);
             ManagementObjectSearcher mos;
             mos = new ManagementObjectSearcher("\\\\" + serv + "\\root\\cimv2", wmiQuery);
-            EventsCollection = mos.Get();
+           mngmtObjectCollection = mos.Get();
+
+            }
+            return mngmtObjectCollection;
         }
 
     }

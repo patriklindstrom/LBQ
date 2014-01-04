@@ -29,19 +29,20 @@ namespace LBQ.Katana
             set { _searchTermsList = value; }
         }
 
-        public EventRecordTimeSpanSearcher EventRTimeSearcher { get; set; }
+        public IEventRecordTimeSpanSearcher EventRTimeSearcher { get; set; }
+
         //public EventLogFilterRepo(List<string> listOfServersToQuersy,List<string> listOfSearchTerms,EventRecordTimeSpanSearcher eventRecordTimeSpanSearcher)
-        public EventLogFilterRepo(ISettingsProvider settingsProvider)
+        public EventLogFilterRepo(ISettingsProvider settingsProvider, IEventRecordTimeSpanSearcher eventRecordTimeSpanSearcher)
         {
-            ListOfServersToQuery = listOfServersToQuersy;
-            SearchTermsList = listOfSearchTerms;
+            ListOfServersToQuery = settingsProvider.GetListOfServersToQuery();
+            SearchTermsList = settingsProvider.GetlistOfSearchTerms();
             EventRTimeSearcher = eventRecordTimeSpanSearcher;
         }
-        public ILogFilter GetData(DateTime fromTime, DateTime toTime)
+        public ILogFilter GetData(DateTime fTime, DateTime tTime)
         {
          //What gets Returned should be made with dependency injection
-          EventRecordTimeSpanSearcher eventRecordTimeSpanSearcher = new EventRecordTimeSpanSearcher(fromTime,toTime);
-            var mossos = eventRecordTimeSpanSearcher.EventsCollection;
+         // EventRecordTimeSpanSearcher eventRecordTimeSpanSearcher = new EventRecordTimeSpanSearcher(fromTime,toTime);
+            var mossos = EventRTimeSearcher.GetEventsCollection(fromTime: fTime, toTime: tTime);
             if (ListOfServersToQuery == null)
             {
                 throw new NullReferenceException(
@@ -99,8 +100,8 @@ namespace LBQ.Katana
                 }
             }
             EventLogFilter eventLogFilter = new EventLogFilter();
-            eventLogFilter.FromDateTime = fromTime;
-            eventLogFilter.ToDateTime = toTime;
+            eventLogFilter.FromDateTime = fTime;
+            eventLogFilter.ToDateTime = tTime;
             eventLogFilter.LastRefreshedTime = DateTime.Now;
             eventLogFilter.LogRows = eventRecordList.AsQueryable();
             eventLogFilter.Title = Global_Const.EVENTLOGTITLE;

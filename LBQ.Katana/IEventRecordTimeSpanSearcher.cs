@@ -1,9 +1,10 @@
-﻿using System.Management;
+﻿using System;
+using System.Management;
 
 namespace LBQ.Katana
 {
     public interface IEventRecordTimeSpanSearcher
     {
-        ManagementObjectCollection EventsCollection { get; set; }
+        ManagementObjectCollection GetEventsCollection(DateTime fromTime, DateTime toTime);
     }
 }

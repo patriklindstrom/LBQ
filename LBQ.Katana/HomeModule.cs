@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using LBQ.Katana.MockupModels;
@@ -12,6 +13,8 @@ namespace LBQ.Katana
 {
     public class HomeModule : NancyModule
     {
+        public ILogFilterRepo EventLogFilterRepo { get; set; }
+
         public HomeModule(ILogFilter model)
         {
             Get["/"] = _ =>
@@ -23,8 +26,10 @@ namespace LBQ.Katana
             };
             Get["/EventLogFilter"] = _ =>
             {
-                ILogFilterRepo eventLogFilterRepo = new EventLogFilterRepo();
-                model = eventLogFilterRepo.GetData();
+                ILogFilterRepo eventLogFilterRepo = EventLogFilterRepo;
+                DateTime fTime = DateTime.Now.AddHours(-6);
+                DateTime tTime = DateTime.Now;
+                model = eventLogFilterRepo.GetData(fromTime:fTime,toTime:tTime);
                 model.Title ="EventLog Filter";
                 return View["EventLogFilter", model];
             };
