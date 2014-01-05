@@ -39,9 +39,7 @@ namespace LBQ.Katana
         }
         public ILogFilter GetData(DateTime fTime, DateTime tTime)
         {
-         //What gets Returned should be made with dependency injection
-         // EventRecordTimeSpanSearcher eventRecordTimeSpanSearcher = new EventRecordTimeSpanSearcher(fromTime,toTime);
-            var mossos = EventRTimeSearcher.GetEventsCollection(fromTime: fTime, toTime: tTime);
+
             if (ListOfServersToQuery == null)
             {
                 throw new NullReferenceException(
@@ -51,7 +49,9 @@ namespace LBQ.Katana
             {
                 throw new NullReferenceException("The list of servers from Config is null. That is bad.");
             }
-
+            //What gets Returned should be made with dependency injection
+            // EventRecordTimeSpanSearcher eventRecordTimeSpanSearcher = new EventRecordTimeSpanSearcher(fromTime,toTime);
+            var mossos = EventRTimeSearcher.GetEventsCollection(fromTime: fTime, toTime: tTime);
             var searchTermList = SearchTermsList;
             int sTCount = searchTermList.Count;
             bool multiSearch = (searchTermList.Count() > 1);
@@ -92,6 +92,7 @@ namespace LBQ.Katana
                         {
 
                             eventRec.SearchT = "Word_" + index.ToString(CultureInfo.InvariantCulture);
+                            eventRec.Msg = message + " -- " + insertionStrings;
                             eventRecordList.Add(eventRec);
                             break;
                         }

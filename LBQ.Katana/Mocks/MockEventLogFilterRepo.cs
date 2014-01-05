@@ -8,7 +8,7 @@ namespace LBQ.Katana.Mocks
         public ILogFilter LogFilter { get; set; }
         public MockEventLogFilterRepo(ILogFilter modelFilter)
         {
-            LogFilter = modelFilter
+            LogFilter = modelFilter;
         }
         public ILogFilter GetData(DateTime fromTime, DateTime toTime)
         {

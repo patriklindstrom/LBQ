@@ -55,10 +55,16 @@
     <ManifestKeyFile>LBQ.Katana_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
@@ -153,9 +159,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo\ISettingsProvider.cs" />
+    <Compile Include="Mocks\MockEventLogFilterRepo.cs" />
+    <Compile Include="Repo\SettingsProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Content\css\LastLoggAgg.css.bundle" />
+    <None Include="Content\css\LastLoggAgg.min.css.gz" />
     <None Include="Content\fonts\glyphicons-halflings-regular.eot" />
     <None Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <None Include="Content\fonts\glyphicons-halflings-regular.ttf" />
@@ -163,7 +173,12 @@
     <None Include="Content\images\Sorting icons.psd" />
     <None Include="LBQ.Katana_TemporaryKey.pfx" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Scripts\jquery-2.0.3.min.map" />
+    <None Include="Scripts\LastLoggAgg.js.bundle" />
+    <None Include="Scripts\LastLoggAgg.min.js.map">
+      <DependentUpon>LastLoggAgg.js.bundle</DependentUpon>
+    </None>
     <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -172,8 +187,15 @@
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
+    <Content Include="Content\css\dataTables.bootstrap.css" />
     <Content Include="Content\css\jquery.dataTables.css" />
     <Content Include="Content\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Content\css\LastLoggAgg.css">
+      <DependentUpon>LastLoggAgg.css.bundle</DependentUpon>
+    </Content>
+    <Content Include="Content\css\LastLoggAgg.min.css">
+      <DependentUpon>LastLoggAgg.css.bundle</DependentUpon>
+    </Content>
     <Content Include="Content\images\back_disabled.png" />
     <Content Include="Content\images\back_enabled.png" />
     <Content Include="Content\images\back_enabled_hover.png" />
@@ -190,6 +212,7 @@
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -201,6 +224,12 @@
     <Content Include="Scripts\jquery.signalR-2.0.1.min.js" />
     <Content Include="Scripts\knockout-2.3.0.debug.js" />
     <Content Include="Scripts\knockout-2.3.0.js" />
+    <Content Include="Scripts\LastLoggAgg.js">
+      <DependentUpon>LastLoggAgg.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Scripts\LastLoggAgg.min.js">
+      <DependentUpon>LastLoggAgg.js.bundle</DependentUpon>
+    </Content>
     <Content Include="views\EventLogFilter\EventLogFilter.html" />
     <Content Include="views\Home\EventLogFilter.html" />
     <Content Include="views\Home\index.html" />

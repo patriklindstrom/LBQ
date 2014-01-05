@@ -100,13 +100,13 @@ namespace LBQ.Katana
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);          
-            //container.Register<IEventRecordTimeSpanSearcher, EventRecordTimeSpanSearcher>();
-            container.Register<IEventRecordTimeSpanSearcher, MockEventRecordTimeSpanSearcher>();
+            container.Register<IEventRecordTimeSpanSearcher, EventRecordTimeSpanSearcher>();
+           // container.Register<IEventRecordTimeSpanSearcher, MockEventRecordTimeSpanSearcher>();
             container.Register<ISettingsProvider, SettingsProvider>();   
-            //container.Register<ILogFilterRepo, EventLogFilterRepo>();
-            container.Register<ILogFilter,MockEventLogFilter>();
-            container.Register<ILogFilterRepo, MockEventLogFilterRepo>();
-          //  container.Register<ILogFilter, EventLogFilter>();
+            container.Register<ILogFilterRepo, EventLogFilterRepo>();
+            //container.Register<ILogFilter,MockEventLogFilter>();
+           // container.Register<ILogFilterRepo, MockEventLogFilterRepo>();
+           container.Register<ILogFilter, EventLogFilter>();
             
 
         }
