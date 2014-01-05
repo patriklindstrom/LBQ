@@ -134,11 +134,12 @@
     <Compile Include="EventLogFilterModule.cs" />
     <Compile Include="EventRecordTimeSpanSearcher.cs" />
     <Compile Include="IEventRecordTimeSpanSearcher.cs" />
+    <Compile Include="Mocks\MockEventRecordTimeSpanSearcher.cs" />
     <Compile Include="Repo\EventLogFilterRepo.cs" />
     <Compile Include="HomeModule.cs" />
     <Compile Include="Hubs\BugHub.cs" />
     <Compile Include="Repo\ILogFilterRepo.cs" />
-    <Compile Include="MockupModels\MockEventLogFilter.cs" />
+    <Compile Include="Mocks\MockEventLogFilter.cs" />
     <Compile Include="Model\Bug.cs" />
     <Compile Include="Model\BugsRepository.cs" />
     <Compile Include="Model\EventLogFilter.cs" />

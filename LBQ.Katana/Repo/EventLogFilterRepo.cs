@@ -6,7 +6,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Management;
-using LBQ.Katana.MockupModels;
 using LBQ.Katana.Model;
 
 namespace LBQ.Katana
