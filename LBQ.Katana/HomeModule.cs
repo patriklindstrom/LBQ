@@ -8,6 +8,7 @@ using LBQ.Katana.MockupModels;
 using LBQ.Katana.Model;
 using Microsoft.Owin;
 using Nancy;
+using Nancy.TinyIoc;
 
 namespace LBQ.Katana
 {
@@ -15,7 +16,7 @@ namespace LBQ.Katana
     {
         public ILogFilterRepo EventLogFilterRepo { get; set; }
 
-        public HomeModule(ILogFilter model)
+        public HomeModule(ILogFilter model, ILogFilterRepo eventLogFilterRepo)
         {
             Get["/"] = _ =>
             {
@@ -26,11 +27,9 @@ namespace LBQ.Katana
             };
             Get["/EventLogFilter"] = _ =>
             {
-                ILogFilterRepo eventLogFilterRepo = EventLogFilterRepo;
                 DateTime fTime = DateTime.Now.AddHours(-6);
                 DateTime tTime = DateTime.Now;
-                model = eventLogFilterRepo.GetData(fromTime:fTime,toTime:tTime);
-                model.Title ="EventLog Filter";
+                model = eventLogFilterRepo.GetData(fromTime:fTime,toTime:tTime);               
                 return View["EventLogFilter", model];
             };
         }

@@ -99,14 +99,15 @@ namespace LBQ.Katana
         }
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            base.ApplicationStartup(container, pipelines);
-           
-           
+            base.ApplicationStartup(container, pipelines);          
             container.Register<IEventRecordTimeSpanSearcher, EventRecordTimeSpanSearcher>();
             container.Register<ISettingsProvider, SettingsProvider>();   
             container.Register<ILogFilterRepo, EventLogFilterRepo>();
             //container.Register<ILogFilter,MockEventLogFilter>();
             container.Register<ILogFilter, EventLogFilter>();
+            var fum =  container.Resolve<ILogFilter>();
+            var foo = container.Resolve<ILogFilterRepo>();
+          //  var fee = Nancy.TinyIoc.TinyIoCContainer.Current.Resolve<ILogFilterRepo>();
         }
     }
 
