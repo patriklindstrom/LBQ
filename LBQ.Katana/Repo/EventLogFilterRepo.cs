@@ -34,7 +34,7 @@ namespace LBQ.Katana
         public EventLogFilterRepo(ISettingsProvider settingsProvider, IEventRecordTimeSpanSearcher eventRecordTimeSpanSearcher)
         {
             ListOfServersToQuery = settingsProvider.GetListOfServersToQuery();
-            SearchTermsList = settingsProvider.GetlistOfSearchTerms();
+            SearchTermsList = settingsProvider.GetListOfSearchTerms();
             EventRTimeSearcher = eventRecordTimeSpanSearcher;
         }
         public ILogFilter GetData(DateTime fTime, DateTime tTime)

@@ -10,11 +10,15 @@ namespace LBQ.Katana
             return new List<string> { "Herkules" }; ;
         }
 
-        public List<string> GetlistOfSearchTerms()
+        public List<string> GetListOfSearchTerms()
         {
             return new List<string> { "Fallout" }; ;
         }
 
+        public int GetCacheExpireInMin()
+        {
+            return 5;
+        }
 
     }
 }

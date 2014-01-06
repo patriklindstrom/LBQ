@@ -21,7 +21,7 @@ namespace LBQ.Katana
             {
                 var owinEnvironment = (IDictionary<string, object>)this.Context.Items["OWIN_REQUEST_ENVIRONMENT"];
                 var owinCtx = new OwinContext(owinEnvironment);
-                Model.Title =  "We have Issues Again with IOC socks...";
+                //Model.Title =  "We have Issues Again with IOC socks...";
                 return View["index", Model];
             };
             Get["/EventLogFilter"] = _ =>

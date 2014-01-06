@@ -104,7 +104,7 @@ namespace LBQ.Katana
             container.Register<ICacheLayer, CacheLayer>().AsSingleton();
             container.Register<IEventRecordTimeSpanSearcher, EventRecordTimeSpanSearcher>();
            // container.Register<IEventRecordTimeSpanSearcher, MockEventRecordTimeSpanSearcher>();
-            container.Register<ISettingsProvider, SettingsProvider>();   
+            container.Register<ISettingsProvider, SettingsProvider>().AsSingleton();   
             container.Register<ILogFilterRepo, EventLogFilterRepo>();
             //container.Register<ILogFilter,MockEventLogFilter>();
            // container.Register<ILogFilterRepo, MockEventLogFilterRepo>();

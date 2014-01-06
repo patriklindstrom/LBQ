@@ -5,6 +5,7 @@ namespace LBQ.Katana
     public interface ISettingsProvider
     {
         List<string> GetListOfServersToQuery();
-        List<string> GetlistOfSearchTerms();        
+        List<string> GetListOfSearchTerms();
+        int GetCacheExpireInMin();
     }
 }
