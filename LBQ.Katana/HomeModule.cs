@@ -26,8 +26,9 @@ namespace LBQ.Katana
             };
             Get["/EventLogFilter"] = _ =>
             {
-                DateTime fTime = DateTime.Now.AddHours(-48);
-                DateTime tTime = DateTime.Now.AddHours(-1);
+                DateTime tTime = DateTime.Parse("2014-01-06 21:45:00");
+                DateTime fTime = tTime.AddHours(-48);
+                
                  Model =  eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime) ;
                 return View["EventLogFilter", Model];
             };

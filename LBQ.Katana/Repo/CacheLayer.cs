@@ -7,10 +7,10 @@ using System.Runtime.Caching;
 namespace LBQ.Katana.Repo
 {
     // CacheLayer taken from Article http://deanhume.com/Home/BlogPost/object-caching----net-4/37
-
+    // TODO: Rewrite with no static methods and singleton instead.
         public class CacheLayer : ICacheLayer
         {
-            static readonly ObjectCache Cache = MemoryCache.Default;
+            readonly ObjectCache _cache = MemoryCache.Default;
 
             /// <summary>
             /// Retrieve cached item
@@ -18,11 +18,11 @@ namespace LBQ.Katana.Repo
             /// <typeparam name="T">Type of cached item</typeparam>
             /// <param name="key">Name of cached item</param>
             /// <returns>Cached item as type</returns>
-            public static T Get<T>(string key) where T : class
+            public  T Get<T>(string key) where T : class
             {
                 try
                 {
-                    return (T)Cache[key];
+                    return (T)_cache[key];
                 }
                 catch
                 {
@@ -37,9 +37,9 @@ namespace LBQ.Katana.Repo
             /// <typeparam name="T">Type of cached item</typeparam>
             /// <param name="objectToCache">Item to be cached</param>
             /// <param name="key">Name of item</param>
-            public static void Add<T>(T objectToCache, string key) where T : class
+            public  void Add<T>(T objectToCache, string key) where T : class
             {
-                Cache.Add(key, objectToCache, DateTime.Now.AddDays(30));
+                _cache.Add(key, objectToCache, DateTime.Now.AddDays(30));
             }
 
             /// <summary>
@@ -48,18 +48,18 @@ namespace LBQ.Katana.Repo
             /// </summary>
             /// <param name="objectToCache">Item to be cached</param>
             /// <param name="key">Name of item</param>
-            public static void Add(object objectToCache, string key)
+            public  void Add(object objectToCache, string key)
             {
-                Cache.Add(key, objectToCache, DateTime.Now.AddDays(30));
+                _cache.Add(key, objectToCache, DateTime.Now.AddDays(30));
             }
 
             /// <summary>
             /// Remove item from cache
             /// </summary>
             /// <param name="key">Name of cached item</param>
-            public static void Clear(string key)
+            public  void Clear(string key)
             {
-                Cache.Remove(key);
+                _cache.Remove(key);
             }
 
             /// <summary>
@@ -67,18 +67,18 @@ namespace LBQ.Katana.Repo
             /// </summary>
             /// <param name="key">Name of cached item</param>
             /// <returns></returns>
-            public static bool Exists(string key)
+            public  bool Exists(string key)
             {
-                return Cache.Get(key) != null;
+                return _cache.Get(key) != null;
             }
 
             /// <summary>
             /// Gets all cached items as a list by their key.
             /// </summary>
             /// <returns></returns>
-            public static List<string> GetAll()
+            public  List<string> GetAll()
             {
-                return Cache.Select(keyValuePair => keyValuePair.Key).ToList();
+                return _cache.Select(keyValuePair => keyValuePair.Key).ToList();
             }
         }
     }
