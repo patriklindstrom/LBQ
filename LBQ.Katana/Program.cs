@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using LBQ.Katana.Mocks;
 using LBQ.Katana.Model;
+using LBQ.Katana.Repo;
 using Microsoft.Owin.Hosting;
 using Nancy;
 using Nancy.Bootstrapper;
@@ -99,7 +100,8 @@ namespace LBQ.Katana
         }
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            base.ApplicationStartup(container, pipelines);          
+            base.ApplicationStartup(container, pipelines);
+            container.Register<ICacheLayer, CacheLayer>().AsSingleton();
             container.Register<IEventRecordTimeSpanSearcher, EventRecordTimeSpanSearcher>();
            // container.Register<IEventRecordTimeSpanSearcher, MockEventRecordTimeSpanSearcher>();
             container.Register<ISettingsProvider, SettingsProvider>();   
@@ -107,8 +109,6 @@ namespace LBQ.Katana
             //container.Register<ILogFilter,MockEventLogFilter>();
            // container.Register<ILogFilterRepo, MockEventLogFilterRepo>();
            container.Register<ILogFilter, EventLogFilter>();
-            
-
         }
     }
 
