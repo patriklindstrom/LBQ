@@ -94,8 +94,12 @@ namespace LBQ.Katana
                             eventRec.SearchT = "Word_" + index.ToString(CultureInfo.InvariantCulture);
                             eventRec.Msg = message + " -- " + insertionStrings;
                             eventRecordList.Add(eventRec);
+                            insertionStrings = String.Empty;
+                            message = String.Empty;
                             break;
                         }
+                        insertionStrings = String.Empty;
+                        message = String.Empty;
                     }
                 }
             }
