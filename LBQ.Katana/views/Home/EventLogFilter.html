@@ -59,7 +59,7 @@
                         <li class="active" id="LastHour1btn"><a href="/eventlogfilter/lasthours/1">Logs 1 hour old</a></li>
                         <li class="active" id="LastHour6btn"><a href="/eventlogfilter/lasthours/6">Logs 6 hour old</a></li>
                         <li class="active" id="LastHour28btn"><a href="/eventlogfilter/lasthours/28">Logs 28 hour old</a></li>
-                        <li class="active" id="BetweenBtn"><a href="/eventlogfilter/between/2014-01-01/2014-01-08/">Logs between</a></li>
+                        <li class="active" id="BetweenBtn"><a id="BetweenLnk" href="/eventlogfilter/between/2014-01-01/2014-01-08/">Logs between</a></li>
                         
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -86,6 +86,19 @@
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
             $('#EventLogTbl').dataTable();
+            function addMinutes(date, minutes) {
+                return new Date(date.getTime() + minutes * 60000);
+            }
+            function dateToYmd(date) {
+                var d = date.getDate();
+                var m = date.getMonth() + 1;
+                var y = date.getFullYear();
+                return '' + y + '-' + (m <= 9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+            };
+            var fT = new Date();
+            var tT = addMinutes(fT, -1 * 60 * 24 * 10);
+            var newUrl = "/eventlogfilter/between/" +dateToYmd(tT)+"T22:15" + "/" + dateToYmd(fT);
+            $("a#BetweenLnk").attr('href', newUrl);
         });
     </script>
 </body>
