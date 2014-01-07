@@ -7,5 +7,7 @@ namespace LBQ.Katana
         List<string> GetListOfServersToQuery();
         List<string> GetListOfSearchTerms();
         int GetCacheExpireInMin();
+
+
     }
 }

@@ -17,8 +17,11 @@ namespace LBQ.Katana
 
         public int GetCacheExpireInMin()
         {
-            return 5;
+            return 2;
         }
+
+
+
 
     }
 }

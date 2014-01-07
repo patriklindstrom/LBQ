@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Caching;
+using Nancy.TinyIoc;
 namespace LBQ.Katana.Repo
 {
     // CacheLayer taken from Article http://deanhume.com/Home/BlogPost/object-caching----net-4/37
@@ -11,6 +12,12 @@ namespace LBQ.Katana.Repo
         public class CacheLayer : ICacheLayer
         {
             readonly ObjectCache _cache = MemoryCache.Default;
+            
+            private readonly int _minutesToRefreshCache;
+            public CacheLayer(ISettingsProvider settings, ISettingsProvider mySettingsProvider)
+            {               
+                _minutesToRefreshCache = mySettingsProvider.GetCacheExpireInMin();
+            }
 
             /// <summary>
             /// Retrieve cached item
@@ -39,7 +46,7 @@ namespace LBQ.Katana.Repo
             /// <param name="key">Name of item</param>
             public  void Add<T>(T objectToCache, string key) where T : class
             {
-                _cache.Add(key, objectToCache, DateTime.Now.AddDays(30));
+                _cache.Add(key, objectToCache, DateTime.Now.AddMinutes(_minutesToRefreshCache));
             }
 
             /// <summary>
@@ -50,7 +57,7 @@ namespace LBQ.Katana.Repo
             /// <param name="key">Name of item</param>
             public  void Add(object objectToCache, string key)
             {
-                _cache.Add(key, objectToCache, DateTime.Now.AddDays(30));
+                _cache.Add(key, objectToCache, DateTime.Now.AddMinutes(_minutesToRefreshCache));
             }
 
             /// <summary>
