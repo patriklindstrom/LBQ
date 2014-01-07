@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>@Model.Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../content/css/LastLoggAgg.min.css" rel="stylesheet" />
+    <link href="/content/css/LastLoggAgg.min.css" rel="stylesheet" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -55,12 +55,12 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="collapsed-menu">
                     <ul class="nav navbar-nav">
-                        <li class="active" id="CacheRefreshbtn"><a href="./?Refresh=true">Refresh cache</a></li>
-                        <li class="active" id="LastHour1btn"><a href="./?hours=1">Logs 1 hour old</a></li>
-                        <li class="active" id="LastHour6btn"><a href="./?hours=6">Logs 6 hour old</a></li>
-                        <li class="active" id="LastHour28btn"><a href="./?hours=28">Logs 28 hour old</a></li>
-                        <li class="active" id="FromToBtn"><a href="./?from=&to=">Logs specific timespan</a></li>
-               
+                        <li class="active" id="CacheRefreshbtn"><a href="./Refresh">Refresh cache</a></li>
+                        <li class="active" id="LastHour1btn"><a href="/eventlogfilter/lasthours/1">Logs 1 hour old</a></li>
+                        <li class="active" id="LastHour6btn"><a href="/eventlogfilter/lasthours/6">Logs 6 hour old</a></li>
+                        <li class="active" id="LastHour28btn"><a href="/eventlogfilter/lasthours/28">Logs 28 hour old</a></li>
+                        <li class="active" id="BetweenBtn"><a href="/eventlogfilter/between/2014-01-01/2014-01-08/">Logs between</a></li>
+                        
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </nav>
@@ -82,7 +82,7 @@
             </tbody>
         </table>
     </div>
-    <script src="../../scripts/LastLoggAgg.min.js"></script>
+    <script src="/scripts/LastLoggAgg.min.js"></script>
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
             $('#EventLogTbl').dataTable();

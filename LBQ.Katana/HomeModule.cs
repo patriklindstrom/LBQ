@@ -14,7 +14,7 @@ namespace LBQ.Katana
     public class HomeModule : NancyModule
     {
         public ILogFilter Model { get; set; }
-
+        // https://github.com/NancyFx/Nancy/wiki/Defining-routes
         public HomeModule( ILogFilterRepo eventLogFilterRepo)
         {
             Get["/"] = _ =>
@@ -26,10 +26,25 @@ namespace LBQ.Katana
             };
             Get["/EventLogFilter"] = _ =>
             {
-                DateTime tTime = DateTime.Parse("2014-01-06 21:45:00");
-                DateTime fTime = tTime.AddHours(-48);
-                
+                DateTime tTime = DateTime.Now;
+                DateTime fTime = tTime.AddHours(-6);               
                  Model =  eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime) ;
+                return View["EventLogFilter", Model];
+            };
+
+            Get["/EventLogFilter/lasthours/{value:int}"] = _ =>
+            {
+                DateTime tTime = DateTime.Now;//DateTime.Parse("2014-01-06 21:45:00");
+                int lasthours = -1*_.value;
+                DateTime fTime = tTime.AddHours(lasthours);
+                Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime);
+                return View["EventLogFilter", Model];
+            };
+            Get["/EventLogFilter/between/{fromdate:datetime}/{todate:datetime}"] = _ =>
+            {
+                DateTime tTime = _.todate;
+                DateTime fTime = _.fromdate;
+                Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime);
                 return View["EventLogFilter", Model];
             };
         }
