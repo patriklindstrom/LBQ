@@ -233,6 +233,10 @@
     <Content Include="Scripts\LastLoggAgg.min.js">
       <DependentUpon>LastLoggAgg.js.bundle</DependentUpon>
     </Content>
+    <Content Include="Scripts\moment-with-langs.js" />
+    <Content Include="Scripts\moment-with-langs.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="views\EventLogFilter\EventLogFilter.html" />
     <Content Include="views\Home\EventLogFilter.html" />
     <Content Include="views\Home\index.html" />
