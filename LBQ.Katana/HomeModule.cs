@@ -35,9 +35,11 @@ namespace LBQ.Katana
             Get["/EventLogFilter/lasthours/{value:int}"] = _ =>
             {
                 DateTime tTime = DateTime.Now;//DateTime.Parse("2014-01-06 21:45:00");
+                DateTime tCDateTime = new DateTime(tTime.Year, tTime.Month, tTime.Day, tTime.Hour, tTime.Minute - tTime.Minute % 5, 0);
                 int lasthours = -1*_.value;
-                DateTime fTime = tTime.AddHours(lasthours);
-                Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime);
+                DateTime fTime = tCDateTime.AddHours(lasthours);
+                Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tCDateTime);
+                Model.LastRefreshedTime = tCDateTime;
                 return View["EventLogFilter", Model];
             };
             Get["/EventLogFilter/between/{fromdate:datetime}/{todate:datetime}"] = _ =>
