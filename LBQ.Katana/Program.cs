@@ -23,6 +23,8 @@ namespace LBQ.Katana
     {
         public static string EVENTLOGTYPE="EventLog";
         public static string EVENTLOGTITLE = "Filterered Eventslogs";
+        public static int FIRST_TIME = 5000;
+        public static int NEXT_TIME = 1*15*1000;
         public const string SOURCE = "application";
         public const string DATE_FORMAT = "yyyyMMddHHmmss";
         public const string DATE_FORMAT_STR = "{0:yyyyMMddHHmmss}";
@@ -31,30 +33,65 @@ namespace LBQ.Katana
     }
     internal class Program
     {
+        
+        private static ILogFilterRepo _evFilterR;
+
+        public Program()
+        {
+            // ToDo why is the default tinyIOC current empty here?
+            _evFilterR = SetDepInj(TinyIoCContainer.Current).Resolve<ILogFilterRepo>();
+        }
         private static void Main(string[] args)
         {
-            string port = "8080";
+            string uri = "http://localhost:8080";
             if (args.Length >0)
             {
-                port = args[0] ?? "8080";
+                uri = args[0] ?? "http://localhost:8080";
             }
+            _evFilterR = SetDepInj(TinyIoCContainer.Current).Resolve<ILogFilterRepo>();
             
-            string uri = "http://localhost:" + port;
             Console.WriteLine("Lets Start listen to this address: " + uri);
             using (WebApp.Start<Startup>(uri))
             {
                 Console.WriteLine("Now we are listening to : " + uri );
-                // First interval = 5000ms; subsequent intervals = 1000ms
-                Timer tmr = new Timer(Tick, "tick...", 5000, 60000);
+                Timer tmr = new Timer(RefreshCache, null, Global_Const.FIRST_TIME, Global_Const.NEXT_TIME);
                 Console.ReadKey();
-                Console.WriteLine("Stopping!");
-                tmr.Dispose();         // This both stops the timer and cleans up.
+                tmr.Dispose();
+                Console.WriteLine("Stopping!");                      
             }
         }
-
-        private static void Tick(object state)
+        private static void RefreshCache(object state)
         {
-            Console.WriteLine("Uppdate cache for last 1 hour for eventlogs");
+            
+            AskForLastHourData(1);
+        }
+
+        private static void AskForLastHourData( int lasthours)
+        {
+            Console.WriteLine("Uppdate cache for last" + 1 + "hour for eventlogs");
+            DateTime tTime = DateTime.Now; //DateTime.Parse("2014-01-06 21:45:00");
+            DateTime tCDateTime = new DateTime(tTime.Year, tTime.Month, tTime.Day, tTime.Hour, tTime.Minute - tTime.Minute%5, 0);
+            DateTime fTime = tCDateTime.AddHours(lasthours*-1);
+            var model = _evFilterR.GetData(fromTime: fTime, toTime: tCDateTime);
+        }
+
+        /// <summary>
+        /// I want to use the same dependency injection for Nancy framework and outside of it
+        /// Since I cant hold of the Nancy current IOC call this method from program start and from nancy startup.
+        /// </summary>
+        /// <param name="tinyIoC"></param>
+        /// <returns>the same tinyIOC where I have made my registrations.</returns>
+        public static TinyIoCContainer SetDepInj(TinyIoCContainer tinyIoC)
+        {
+            tinyIoC.Register<ISettingsProvider, SettingsProvider>().AsSingleton();
+            tinyIoC.Register<ICacheLayer, CacheLayer>().AsSingleton();
+            // container.Register<IEventRecordTimeSpanSearcher, MockEventRecordTimeSpanSearcher>(); 
+            tinyIoC.Register<IEventRecordTimeSpanSearcher, EventRecordTimeSpanSearcher>();
+            tinyIoC.Register<ILogFilterRepo, EventLogFilterRepo>();
+            //container.Register<ILogFilter,MockEventLogFilter>();
+            // container.Register<ILogFilterRepo, MockEventLogFilterRepo>();
+            tinyIoC.Register<ILogFilter, EventLogFilter>();
+            return tinyIoC;
         }
     }
 
@@ -88,7 +125,7 @@ namespace LBQ.Katana
                 options.Bootstrapper = new CustomBootstrapper();
             });
 
-
+            
             //app.UseHelloWorld();
             //  app.UseWelcomePage();
             //app.Run(ctx =>
@@ -100,6 +137,7 @@ namespace LBQ.Katana
     }
     public class CustomBootstrapper : DefaultNancyBootstrapper
     {
+        private ILogFilterRepo _evFilterR;
         protected override void ConfigureConventions(NancyConventions nancyConventions)
         {
             base.ConfigureConventions(nancyConventions);
@@ -112,15 +150,10 @@ namespace LBQ.Katana
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
-            container.Register<ISettingsProvider, SettingsProvider>().AsSingleton();  
-            container.Register<ICacheLayer, CacheLayer>().AsSingleton();
-            container.Register<IEventRecordTimeSpanSearcher, EventRecordTimeSpanSearcher>();
-           // container.Register<IEventRecordTimeSpanSearcher, MockEventRecordTimeSpanSearcher>(); 
-            container.Register<ILogFilterRepo, EventLogFilterRepo>();
-            //container.Register<ILogFilter,MockEventLogFilter>();
-           // container.Register<ILogFilterRepo, MockEventLogFilterRepo>();
-           container.Register<ILogFilter, EventLogFilter>();
+           container= LBQ.Katana.Program.SetDepInj(container);
         }
+
+  
     }
 
     public static class AppBuildExtensions

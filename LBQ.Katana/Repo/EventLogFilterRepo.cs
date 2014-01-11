@@ -24,13 +24,15 @@ namespace LBQ.Katana.Repo
         public ILogFilter GetData(DateTime fTime, DateTime tTime )
         {
             EventLogFilter eventLogFilter;
-           var cacheKey = fTime.ToUniversalTime() + "-" + tTime.ToUniversalTime();
+           var cacheKey = fTime.ToUniversalTime() + "--" + tTime.ToUniversalTime();
             if (EventLogCache.Exists(cacheKey))
             {
+                Console.WriteLine("Get cached data for: " + cacheKey);
                 eventLogFilter = EventLogCache.Get<EventLogFilter>(cacheKey);
             }
             else
             {
+                Console.WriteLine("Get fresh data for: " + cacheKey);
                 eventLogFilter = GetEventLogFilter(fTime, tTime);
                 EventLogCache.Add(GetEventLogFilter(fTime, tTime), cacheKey);
             }
