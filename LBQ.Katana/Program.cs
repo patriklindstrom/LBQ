@@ -13,6 +13,7 @@ using Microsoft.Owin.Hosting;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Conventions;
+using Nancy.Owin;
 using Nancy.TinyIoc;
 using Owin;
 
@@ -123,10 +124,11 @@ namespace LBQ.Katana
             app.UseNancy(options =>
             {
                 options.Bootstrapper = new CustomBootstrapper();
+                options.PassThroughWhenStatusCodesAre(HttpStatusCode.NotFound);
             });
 
-            
-            //app.UseHelloWorld();
+
+            app.UseMissingPage();
             //  app.UseWelcomePage();
             //app.Run(ctx =>
             //{
@@ -158,18 +160,18 @@ namespace LBQ.Katana
 
     public static class AppBuildExtensions
     {
-        public static void UseHelloWorld(this IAppBuilder app)
+        public static void UseMissingPage(this IAppBuilder app)
         {
-            app.Use<HelloWorldComponent>();
+            app.Use<MissingPageComponent>();
         }
     }
     
 
 
-public class HelloWorldComponent
+public class MissingPageComponent
     {
         private AppFunc _next;
-        public HelloWorldComponent( AppFunc next)
+        public MissingPageComponent(AppFunc next)
         {
             _next = next;
         }
@@ -179,7 +181,7 @@ public class HelloWorldComponent
             var response = environment["owin.ResponseBody"] as Stream;
             using (var writer = new StreamWriter(response))
             {
-                return writer.WriteAsync("Hello Where is my Katana!!");
+                return writer.WriteAsync("Hello Where is my Katana!!. This page is missing");
             }
 
         }
