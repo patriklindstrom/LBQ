@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using LBQ.Katana.Mocks;
@@ -43,9 +44,17 @@ namespace LBQ.Katana
             using (WebApp.Start<Startup>(uri))
             {
                 Console.WriteLine("Now we are listening to : " + uri );
+                // First interval = 5000ms; subsequent intervals = 1000ms
+                Timer tmr = new Timer(Tick, "tick...", 5000, 60000);
                 Console.ReadKey();
                 Console.WriteLine("Stopping!");
+                tmr.Dispose();         // This both stops the timer and cleans up.
             }
+        }
+
+        private static void Tick(object state)
+        {
+            Console.WriteLine("Uppdate cache for last 1 hour for eventlogs");
         }
     }
 
@@ -78,6 +87,8 @@ namespace LBQ.Katana
             {
                 options.Bootstrapper = new CustomBootstrapper();
             });
+
+
             //app.UseHelloWorld();
             //  app.UseWelcomePage();
             //app.Run(ctx =>
