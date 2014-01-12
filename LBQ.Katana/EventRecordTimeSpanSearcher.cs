@@ -12,7 +12,7 @@ namespace LBQ.Katana
         public List<string> ServerList { get; set; }
         public EventRecordTimeSpanSearcher(ISettingsProvider settingsProvider)
         {
-            ServerList = settingsProvider.GetListOfServersToQuery();
+            ServerList = settingsProvider.ServersToQuery;
         }
 
         public ManagementObjectCollection GetEventsCollection(DateTime fromTime, DateTime toTime)

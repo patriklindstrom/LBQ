@@ -17,8 +17,8 @@ namespace LBQ.Katana.Repo
         public EventLogFilterRepo(ISettingsProvider settingsProvider, IEventRecordTimeSpanSearcher eventRecordTimeSpanSearcher, ICacheLayer sweetCacheLayer)
         {
             EventLogCache = sweetCacheLayer;
-            ListOfServersToQuery = settingsProvider.GetListOfServersToQuery();
-            SearchTermsList = settingsProvider.GetListOfSearchTerms();
+            ListOfServersToQuery = settingsProvider.ServersToQuery;
+            SearchTermsList = settingsProvider.FilterTerm;
             EventRTimeSearcher = eventRecordTimeSpanSearcher;
         }
         public ILogFilter GetData(DateTime fTime, DateTime tTime )

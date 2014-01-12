@@ -22,15 +22,22 @@ namespace LBQ.Katana
     using AppFunc = Func<IDictionary<string, object>, Task>;
     public static class Global_Const
     {
-        public static string EVENTLOGTYPE="EventLog";
-        public static string EVENTLOGTITLE = "Filterered Eventslogs";
-        public static int FIRST_TIME = 5000;
-        public static int NEXT_TIME = 1*15*1000;
+        public const string EVENTLOGTYPE = "EventLog";
+        public const string EVENTLOGTITLE = "Filterered Eventslogs";
+        public const int FIRST_TIME = 5000;
+        public const int NEXT_TIME = 1 * 15 * 1000;
+        //public static List<string> TBL_HEADERS = new List<string>(){"Title","LastRefreshedTime","LogRows","FromDateTime","ToDateTime"};
         public const string SOURCE = "application";
         public const string DATE_FORMAT = "yyyyMMddHHmmss";
         public const string DATE_FORMAT_STR = "{0:yyyyMMddHHmmss}";
         public const int MAXGETROWS = 5000;
         public const int TIMEOUT_S = 2;
+        public const String DEFAULT_SQL_STATEMENT =
+    @"SELECT  msdb.dbo.agent_datetime(h.run_date,h.run_time) as run_time,run_duration,run_status,h.server,s.name as jobname,  h.step_name,  h.message
+        FROM  msdb..sysjobs as s
+          join  msdb..sysjobhistory as h ON h.job_id = s.job_id
+          where  msdb.dbo.agent_datetime(h.run_date,h.run_time)between @FromTime AND @ToTime
+          Order by  h.run_date desc, h.run_time desc; ";
     }
     internal class Program
     {

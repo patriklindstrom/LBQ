@@ -16,7 +16,7 @@ namespace LBQ.Katana.Repo
             private readonly int _minutesToRefreshCache;
             public CacheLayer(ISettingsProvider settings, ISettingsProvider mySettingsProvider)
             {               
-                _minutesToRefreshCache = mySettingsProvider.GetCacheExpireInMin();
+                _minutesToRefreshCache = mySettingsProvider.CacheExpireInMin;
             }
 
             /// <summary>
