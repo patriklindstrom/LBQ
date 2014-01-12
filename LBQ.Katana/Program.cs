@@ -91,14 +91,24 @@ namespace LBQ.Katana
         /// <returns>the same tinyIOC where I have made my registrations.</returns>
         public static TinyIoCContainer SetDepInj(TinyIoCContainer tinyIoC)
         {
+            // For convienenace both the mockup and the real object impl are here. Delete or comment out
+            // the once you do no want
+            #region  Real Object implemenations
             tinyIoC.Register<ISettingsProvider, SettingsProvider>().AsSingleton();
             tinyIoC.Register<ICacheLayer, CacheLayer>().AsSingleton();
-            // container.Register<IEventRecordTimeSpanSearcher, MockEventRecordTimeSpanSearcher>(); 
-            tinyIoC.Register<IEventRecordTimeSpanSearcher, EventRecordTimeSpanSearcher>();
-            tinyIoC.Register<ILogFilterRepo, EventLogFilterRepo>();
-            //container.Register<ILogFilter,MockEventLogFilter>();
-            // container.Register<ILogFilterRepo, MockEventLogFilterRepo>();
-            tinyIoC.Register<ILogFilter, EventLogFilter>();
+            //tinyIoC.Register<IEventRecordTimeSpanSearcher, EventRecordTimeSpanSearcher>();
+            //tinyIoC.Register<ILogFilterRepo, EventLogFilterRepo>();
+            // tinyIoC.Register<ILogFilter, EventLogFilter>();
+            #endregion
+
+            #region  Mockup setting
+
+            tinyIoC.Register<IEventRecordTimeSpanSearcher, MockEventRecordTimeSpanSearcher>();
+            tinyIoC.Register<ILogFilter, MockEventLogFilter>();
+            tinyIoC.Register<ILogFilterRepo, MockEventLogFilterRepo>();
+
+            #endregion
+          
             return tinyIoC;
         }
     }
