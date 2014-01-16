@@ -25,7 +25,7 @@ namespace LBQ.Katana.api
               int lasthours = -1 * hours;
               DateTime fTime = tCDateTime.AddHours(lasthours);
               var foo = _eventFilterRepo.GetData(fromTime: fTime, toTime: tCDateTime);
-              return foo;
+              return null;
           }
     }
 }

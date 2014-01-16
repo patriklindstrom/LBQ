@@ -40,47 +40,51 @@
             </div><!-- /.navbar-collapse -->
         </nav>
       
-            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-                <!-- Menu get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapsed-menu">
-                        <span class="sr-only">Toggle menu</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <!-- Menu get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapsed-menu">
+                    <span class="sr-only">Toggle menu</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                </div>
+            </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="collapsed-menu">
-                    <ul class="nav navbar-nav">
-                        <li class="active" id="CacheRefreshbtn"><a href="./Refresh">Refresh cache</a></li>
-                        <li class="active" id="LastHour1btn"><a href="/eventlogfilter/lasthours/1">Logs 1 hour old</a></li>
-                        <li class="active" id="LastHour6btn"><a href="/eventlogfilter/lasthours/6">Logs 6 hour old</a></li>
-                        <li class="active" id="LastHour28btn"><a href="/eventlogfilter/lasthours/28">Logs 28 hour old</a></li>
-                        <li class="active" id="BetweenBtn"><a id="BetweenLnk" href="/eventlogfilter/between/2014-01-01/2014-01-08/">Logs between</a></li>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="collapsed-menu">
+                <ul class="nav navbar-nav">
+                    <li class="active" id="CacheRefreshbtn"><a href="./Refresh">Refresh cache</a></li>
+                    <li class="active" id="LastHour1btn"><a href="/eventlogfilter/lasthours/1">Logs 1 hour old</a></li>
+                    <li class="active" id="LastHour6btn"><a href="/eventlogfilter/lasthours/6">Logs 6 hour old</a></li>
+                    <li class="active" id="LastHour28btn"><a href="/eventlogfilter/lasthours/28">Logs 28 hour old</a></li>
+                    <li class="active" id="BetweenBtn"><a id="BetweenLnk" href="/eventlogfilter/between/2014-01-01/2014-01-08/">Logs between</a></li>
                         
-                    </ul>
-                </div><!-- /.navbar-collapse -->
-            </nav>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+</header>
+
+    <div class="container">      
+            <div class="row">
+                <div class="col-lg-10">
+                    <h3>@Model.Title Cached since <span id="CachRefreshTime" class="text-primary"> @Model.LastRefreshedTime </span> </h3>
+                </div>
+            </div>
+       
         <div class="row">
-            <h1>@Model.Title Cached since <span id="CachRefreshTime" class="text-primary"> @Model.LastRefreshedTime </span> </h1>
-        </div>
-
-
-    </header>
-
-    <div class="container">
-
-        <table id="EventLogTbl" class="table table-striped table-bordered">
-            <thead><tr><td>Time</td><td>Log type</td><td>Source</td><td>Log Message</td></tr></thead>
-            <tbody>
-                @Each.LogRows
-                <tr class="@current.searcht"><td>@Current.Time</td><td>@Current.LogType</td><td>@Current.Src</td><td>@Current.Msg</td></tr>
-                @EndEach
-            </tbody>
-        </table>
+            <div class="col-lg-10">
+                <table id="EventLogTbl" class="table table-striped table-bordered">
+                    <thead><tr><td>Time</td><td>Log type</td><td>Source</td><td>Log Message</td></tr></thead>
+                    <tbody>
+                        @Each.LogRows
+                        <tr class="@current.searcht"><td>@Current.Time</td><td>@Current.LogType</td><td>@Current.Src</td><td>@Current.Msg</td></tr>
+                        @EndEach
+                    </tbody>
+                </table>
+            </div>
+            </div>
     </div>
     <script src="/scripts/LastLoggAgg.min.js"></script>
     <script type="text/javascript" charset="utf-8">
