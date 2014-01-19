@@ -20,6 +20,6 @@ namespace LBQ.Katana.Model
         public string LogType { get; set; }
         public string Src { get; set; }
         public string Msg { get; set; }
-        public string SearchT { get; set; }
+       // public string SearchT { get; set; }
     }
 }

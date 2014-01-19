@@ -27,7 +27,7 @@ namespace LBQ.Katana.Mocks
                     Time = DateTime.UtcNow.AddMinutes(-5),
                     LogType = "EventRec",
                     Msg = "TCM BatchId= 12345; TCM good",
-                    SearchT = "TCM",
+                   // SearchT = "TCM",
                     Src = "ABC_Server1\\EventRec\\Application"
                 },
                 new LogFilterRow
@@ -35,7 +35,7 @@ namespace LBQ.Katana.Mocks
                     Time = DateTime.UtcNow.AddMinutes(-6),
                     LogType = "EventRec",
                     Msg = "TCM BatchId= 12346; TCM still good",
-                    SearchT = "TCM",
+                 //   SearchT = "TCM",
                     Src = "ABC_Server2\\EventRec\\Application"
                 },
                 new LogFilterRow
@@ -43,7 +43,7 @@ namespace LBQ.Katana.Mocks
                     Time = DateTime.UtcNow.AddMinutes(-7),
                     LogType = "EventRec",
                     Msg = "TCM BatchId= 12347; TCM feels a little bad like Error=6658423",
-                    SearchT = "Error",
+                   // SearchT = "Error",
                     Src = "ABC_Server1\\EventRec\\System"
                 },
                 new LogFilterRow
@@ -51,7 +51,7 @@ namespace LBQ.Katana.Mocks
                     Time = DateTime.UtcNow.AddMilliseconds(-200),
                     LogType = "EventRec",
                     Msg = "TCM BatchId= 12347; TCM good guitar",
-                    SearchT = "TCM",
+                   // SearchT = "TCM",
                     Src = "ABC_Server2\\EventRec\\Application"
                 }
             }.AsQueryable();

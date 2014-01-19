@@ -8,7 +8,8 @@ namespace LBQ.Katana.Model
 {
     public class DataTableAjax 
 {
-    public   List<ILogFilterRow> aaData  ;
+    //string [,] aaData = new string[szOfA,4];
+    public   string[,]  aaData  ;
         // public string SearchT { get; set; }
 }
 }

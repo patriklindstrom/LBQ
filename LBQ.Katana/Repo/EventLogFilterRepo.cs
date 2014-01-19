@@ -89,7 +89,7 @@ namespace LBQ.Katana.Repo
                         if (sourceName.Contains(searchTerm) || message.Contains(searchTerm) ||
                             insertionStrings.Contains(searchTerm))
                         {
-                            eventRec.SearchT = "Word_" + index.ToString(CultureInfo.InvariantCulture);
+                           // eventRec.SearchT = "Word_" + index.ToString(CultureInfo.InvariantCulture);
                             eventRec.Msg = message + " -- " + insertionStrings;
                             eventRecordList.Add(eventRec);
                             insertionStrings = String.Empty;

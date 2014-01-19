@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LBQ.Katana.Model;
 using Microsoft.Owin;
+using Microsoft.Web.Editor.Diagnostics;
 using Nancy;
 using Nancy.TinyIoc;
 
@@ -55,13 +56,20 @@ namespace LBQ.Katana
                 DateTime tTime = DateTime.Now;
                 DateTime fTime = tTime.AddHours(-6);
                 Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime);
-                List<ILogFilter> dataTableData = new List<ILogFilter>();
                 DataTableAjax aaTableAjax = new DataTableAjax();
-                aaTableAjax.aaData = Model.LogRows.ToList();
+                int szOfA = Model.LogRows.Count();
+                int i = 0;
+                string [,] aaData = new string[szOfA,4];
                 foreach (var lRow in Model.LogRows)
                 {
-                    aaTableAjax.aaData.Add(new LogFilterRow() { Msg = lRow.Msg, LogType = lRow.LogType, Time = lRow.Time });                   
+                    aaData[i, 0] = lRow.Time.ToString();
+                    aaData[i, 1] = lRow.LogType;
+                    aaData[i, 2] = lRow.Src;
+                    aaData[i, 3] = lRow.Msg;
+                        i++;
+                    //{ Msg = lRow.Msg, LogType = lRow.LogType, Time = lRow.Time };                   
                 }
+                aaTableAjax.aaData = aaData;
                 return aaTableAjax;
             };
         }
