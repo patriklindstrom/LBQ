@@ -32,6 +32,7 @@ namespace LBQ.Katana
                 return View["EventLogFilter", Model];
             };
 
+
             Get["/EventLogFilter/lasthours/{value:int}"] = _ =>
             {
                 DateTime tTime = DateTime.Now;//DateTime.Parse("2014-01-06 21:45:00");
@@ -48,6 +49,20 @@ namespace LBQ.Katana
                 DateTime fTime = _.fromdate;
                 Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime);
                 return View["EventLogFilter", Model];
+            };
+            Get["/api/datatables/EventLogFilter"] = _ =>
+            {
+                DateTime tTime = DateTime.Now;
+                DateTime fTime = tTime.AddHours(-6);
+                Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime);
+                List<ILogFilter> dataTableData = new List<ILogFilter>();
+                DataTableAjax aaTableAjax = new DataTableAjax();
+                aaTableAjax.aaData = Model.LogRows.ToList();
+                foreach (var lRow in Model.LogRows)
+                {
+                    aaTableAjax.aaData.Add(new LogFilterRow() { Msg = lRow.Msg, LogType = lRow.LogType, Time = lRow.Time });                   
+                }
+                return aaTableAjax;
             };
         }
     }

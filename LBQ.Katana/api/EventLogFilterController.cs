@@ -13,19 +13,10 @@ namespace LBQ.Katana.api
     {
         private ILogFilterRepo _eventFilterRepo;
 
-        public EventLogFilterController(ILogFilterRepo eRepo)
+        public EventLogFilterController()
         {
-            _eventFilterRepo = eRepo;
+            _eventFilterRepo = null;
         }
-          [Route("api/EventLogFilter/lasthours/")]
-        public IEnumerable<aaData> Get(int hours)
-          {
-              DateTime tTime = DateTime.Now;//DateTime.Parse("2014-01-06 21:45:00");
-              DateTime tCDateTime = new DateTime(tTime.Year, tTime.Month, tTime.Day, tTime.Hour, tTime.Minute - tTime.Minute % 5, 0);
-              int lasthours = -1 * hours;
-              DateTime fTime = tCDateTime.AddHours(lasthours);
-              var foo = _eventFilterRepo.GetData(fromTime: fTime, toTime: tCDateTime);
-              return null;
-          }
+
     }
 }

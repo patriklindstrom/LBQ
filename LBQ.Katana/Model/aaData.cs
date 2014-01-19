@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace LBQ.Katana.Model
 {
-    public class aaData : ILogFilterRow
+    public class DataTableAjax 
 {
-        public DateTime Time { get; set; }
-        public string LogType { get; set; }
-        public string Src { get; set; }
-        public string Msg { get; set; }
-        public string SearchT { get; set; }
+    public   List<ILogFilterRow> aaData  ;
+        // public string SearchT { get; set; }
 }
 }

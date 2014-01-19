@@ -136,7 +136,7 @@ namespace LBQ.Katana
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
             config.Routes.MapHttpRoute("bugs", "api/{Controller}");
-            app.UseWebApi(config);
+           // app.UseWebApi(config);
 
             app.UseNancy(options =>
             {
