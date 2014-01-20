@@ -13,6 +13,7 @@ namespace LBQ.Katana.Model
         string LogType { get; set; }
         string Src { get; set; }
         string Msg { get; set; }
-       // string SearchT { get; set; }
+        string TimeAsStr { get; }
+        // string SearchT { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace LBQ.Katana
     using AppFunc = Func<IDictionary<string, object>, Task>;
     public static class Global_Const
     {
+        public const int LASTHOURS_DEFAULT = -6;
         public const string EVENTLOGTYPE = "EventLog";
         public const string EVENTLOGTITLE = "Filterered Eventslogs";
         public const int FIRST_TIME = 5000;

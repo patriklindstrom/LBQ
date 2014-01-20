@@ -18,9 +18,10 @@ namespace LBQ.Katana
         // https://github.com/NancyFx/Nancy/wiki/Defining-routes
         public HomeModule( ILogFilterRepo eventLogFilterRepo)
         {
+            #region Browser routing
             Get["/"] = _ =>
             {
-                var owinEnvironment = (IDictionary<string, object>)this.Context.Items["OWIN_REQUEST_ENVIRONMENT"];
+                var owinEnvironment = (IDictionary<string, object>) this.Context.Items["OWIN_REQUEST_ENVIRONMENT"];
                 var owinCtx = new OwinContext(owinEnvironment);
                 //Model.Title =  "We have Issues Again with IOC socks...";
                 return View["index", Model];
@@ -28,16 +29,17 @@ namespace LBQ.Katana
             Get["/EventLogFilter"] = _ =>
             {
                 DateTime tTime = DateTime.Now;
-                DateTime fTime = tTime.AddHours(-6);               
-                 Model =  eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime) ;
+                DateTime fTime = tTime.AddHours(Global_Const.LASTHOURS_DEFAULT);
+                Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime);
                 return View["EventLogFilter", Model];
             };
 
 
             Get["/EventLogFilter/lasthours/{value:int}"] = _ =>
             {
-                DateTime tTime = DateTime.Now;//DateTime.Parse("2014-01-06 21:45:00");
-                DateTime tCDateTime = new DateTime(tTime.Year, tTime.Month, tTime.Day, tTime.Hour, tTime.Minute - tTime.Minute % 5, 0);
+                DateTime tTime = DateTime.Now; //DateTime.Parse("2014-01-06 21:45:00");
+                DateTime tCDateTime = new DateTime(tTime.Year, tTime.Month, tTime.Day, tTime.Hour,
+                    tTime.Minute - tTime.Minute%5, 0);
                 int lasthours = -1*_.value;
                 DateTime fTime = tCDateTime.AddHours(lasthours);
                 Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tCDateTime);
@@ -51,27 +53,45 @@ namespace LBQ.Katana
                 Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime);
                 return View["EventLogFilter", Model];
             };
+
+            #endregion
+
+            #region Rest api calls
+
+            // the datatables.net jQuery grid wants the data as a two dimensional json array called aaData
+            // to get best performance for lazy rendering
+            // see http://datatables.net/release-datatables/examples/ajax/defer_render.html
+            // So we need to convert the LogFilterRow to a jagged string[][] array to get right format 
+            // see: http://msdn.microsoft.com/en-us/library/aa288453(v=vs.71).aspx
             Get["/api/datatables/EventLogFilter"] = _ =>
             {
                 DateTime tTime = DateTime.Now;
-                DateTime fTime = tTime.AddHours(-6);
+                DateTime fTime = tTime.AddHours(Global_Const.LASTHOURS_DEFAULT);
                 Model = eventLogFilterRepo.GetData(fromTime: fTime, toTime: tTime);
-                DataTableAjax aaTableAjax = new DataTableAjax();
-                int szOfA = Model.LogRows.Count();
+                var aaTableAjax = new DataTableAjax();
                 int i = 0;
-                string [,] aaData = new string[szOfA,4];
+                string[][] aaData = new string[Model.LogRows.Count()][];
                 foreach (var lRow in Model.LogRows)
                 {
-                    aaData[i, 0] = lRow.Time.ToString();
-                    aaData[i, 1] = lRow.LogType;
-                    aaData[i, 2] = lRow.Src;
-                    aaData[i, 3] = lRow.Msg;
-                        i++;
-                    //{ Msg = lRow.Msg, LogType = lRow.LogType, Time = lRow.Time };                   
+                    var aDataTblRow = new string[4];
+                    aDataTblRow[0] = lRow.TimeAsStr;
+                    aDataTblRow[1] = lRow.LogType;
+                    aDataTblRow[2] = lRow.Src;
+                    aDataTblRow[3] = lRow.Msg;
+                    aaData[i] = aDataTblRow;
+                    i++;
                 }
                 aaTableAjax.aaData = aaData;
                 return aaTableAjax;
             };
+            #endregion
+        }
+        /// <summary>
+        /// Only used to get the right format for the DataTables ajax respons.
+        /// </summary>
+        internal class DataTableAjax
+        {
+            public string[][] aaData;
         }
     }
  

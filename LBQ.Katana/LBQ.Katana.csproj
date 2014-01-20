@@ -144,7 +144,6 @@
     <Compile Include="EventRecordTimeSpanSearcher.cs" />
     <Compile Include="IEventRecordTimeSpanSearcher.cs" />
     <Compile Include="Mocks\MockEventRecordTimeSpanSearcher.cs" />
-    <Compile Include="Model\aaData.cs" />
     <Compile Include="Repo\CacheLayer.cs" />
     <Compile Include="Repo\EventLogFilterRepo.cs" />
     <Compile Include="HomeModule.cs" />

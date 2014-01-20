@@ -12,11 +12,12 @@ namespace LBQ.Katana.Model
         
         public DateTime Time { get; set; }
 
-        //public string TimeAsStr
-        //{
-        //    get { return Time.ToString(CultureInfo.InvariantCulture); }         
-        //}
-
+        public string TimeAsStr
+        {
+            get { return Time.ToString("o"); }
+            //shorter get { return Time.ToString("s"); }
+        }
+        
         public string LogType { get; set; }
         public string Src { get; set; }
         public string Msg { get; set; }
