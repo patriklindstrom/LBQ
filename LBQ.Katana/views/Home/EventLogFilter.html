@@ -88,9 +88,11 @@
         $(document).ready(function () {
             $('#EventLogTbl').dataTable(
                  {
-                     "bProcessing": true,
+                     "bProcessing": false,                    
                      "sAjaxSource": "api/datatables/EventLogFilter",
-                     "bDeferRender": true
+                     "bDeferRender": true,
+                     "bSortClasses": false,
+                     "aaSorting": [[0,'desc']]
                  }
 
 

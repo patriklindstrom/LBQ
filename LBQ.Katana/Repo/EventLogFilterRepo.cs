@@ -34,7 +34,7 @@ namespace LBQ.Katana.Repo
             {
                 Console.WriteLine("Get fresh data for: " + cacheKey);
                 eventLogFilter = GetEventLogFilter(fTime, tTime);
-                EventLogCache.Add(GetEventLogFilter(fTime, tTime), cacheKey);
+                EventLogCache.Add(eventLogFilter, cacheKey);
             }
             return eventLogFilter;
         }
@@ -48,7 +48,7 @@ namespace LBQ.Katana.Repo
                 FromDateTime = fTime,
                 ToDateTime = tTime,
                 LastRefreshedTime = DateTime.Now,
-                LogRows = eventRecordList.AsQueryable(),
+                LogRows = eventRecordList.AsQueryable().OrderByDescending(r=>r.Time),
                 Title = Global_Const.EVENTLOGTITLE
             };
             return eventLogFilter;

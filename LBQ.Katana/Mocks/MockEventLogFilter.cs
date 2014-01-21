@@ -54,7 +54,7 @@ namespace LBQ.Katana.Mocks
                    // SearchT = "TCM",
                     Src = "ABC_Server2\\EventRec\\Application"
                 }
-            }.AsQueryable();
+            }.AsQueryable().OrderByDescending(r=>r.Time);
         }
     }
 }
