@@ -9,10 +9,10 @@ using Nancy;
 namespace LBQ.Katana
 {
 
-    class EventLogFilterModule : NancyModule
+    public class EventLogFilterModule : NancyModule
     {
         public EventLogFilterModule(ILogFilter model)
-            : base("/EventLogFilter/")
+            : base("/EventLogFilter")
         {
             var foo = model.GetType();
             Get["/fum/"] = _ =>
